@@ -1,4 +1,4 @@
-define(["controller/Mediator", "view/Star", "Tone/source/Player"], function(Mediator, Star, Player){
+define(["controller/Mediator", "view/Star"], function(Mediator, Star){
 	/**
 	 *  @constructor
 	 *  @param {Object} description 
@@ -6,7 +6,7 @@ define(["controller/Mediator", "view/Star", "Tone/source/Player"], function(Medi
 	var Constellation = function(description){
 
 		/** @type {Tone.Player} */
-		this.player = new Player(description.sample);	
+		// this.player = new Player(description.sample);	
 
 		/** @type {Array.<StarView>} */
 		this.stars = [];
