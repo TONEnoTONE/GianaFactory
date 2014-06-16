@@ -40,7 +40,7 @@ define(function(){
 	///////////////////////////////////////////////////////////////////////////
 	
 	function updateLoop(){
-		requestAnimFrame(updateLoop);
+		requestAnimationFrame(updateLoop);
 		Mediator.send("update");
 	}
 
@@ -50,7 +50,7 @@ define(function(){
 });
 
 // shim layer with setTimeout fallback
-window.requestAnimFrame = (function(){
+window.requestAnimationFrame = (function(){
   return  window.requestAnimationFrame       ||
 		  window.webkitRequestAnimationFrame ||
 		  window.mozRequestAnimationFrame    ||
