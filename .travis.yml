@@ -39,4 +39,4 @@ after_success:
 #clean up
 #- rm -rf ./tmp
 
-    - curl POST -X https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=sdifjze5Xb11xFXV3MnZ
+    - curl -X POST https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=sdifjze5Xb11xFXV3MnZ
