@@ -8,10 +8,16 @@ module.exports = function(grunt) {
 	    src: [
 	    	'./index.html',
 	    	'./images/**',
-	    	'./dep/**',
+	    	'./deps/**',
+	    	'./style/**',
 	    	'./app/**'
 	    ],
 	    dest: './build/release/www/',
+	  },
+	  cordova: {
+	    cwd: './build/release/www/',
+	    src: '**',
+	    dest: './cordova/www/'
 	  }
 	},
 	clean: {
@@ -35,6 +41,8 @@ module.exports = function(grunt) {
 
   // Default task(s).
   //grunt.registerTask('default', ['clean:release','copy:assets', 'cssmin','clean:releaseFiles']);
-  grunt.registerTask('default', ['clean:release','copy:assets']);
+  grunt.registerTask('default', ['clean:release','copy:assets','copy:cordova']);
   
 };
+
+// cordova create ./cordova com.tonenotone.gianafactorystaging "Giana Factory"
