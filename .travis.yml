@@ -26,6 +26,9 @@ script:
 #- cd $ROOT_DIR/compiler/
 #- ./close.sh
 
+before_script:
+    - npm install -g grunt-cli
+
 after_success: 
 #- cd $ROOT_DIR
 #- git config credential.helper "store --file=.git/credentials"
@@ -39,4 +42,4 @@ after_success:
 #clean up
 #- rm -rf ./tmp
     - grunt deployS3
-    - curl -X POST https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=$phoneGapToken
+    - curl -X GET https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=$phoneGapToken
