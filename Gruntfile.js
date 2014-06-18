@@ -3,7 +3,6 @@ module.exports = function(grunt) {
   	// Project configuration.
   	grunt.initConfig({
   	  //pkg: grunt.file.readJSON('package.json'),
-  	  keys: grunt.file.readJSON('keys.json'), // Read the file
   	  copy: {
 		  	assets: {
 		    	src: [
