@@ -41,8 +41,6 @@ module.exports = function(grunt) {
   
   
   	grunt.config(
-		//export AWS_S3_KEY=AKIAJ5YGRDLREMFVJY4A
-		//export AWS_S3_SECRET=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
 		'aws_s3', {
 	  	options: {
 	    	//process.env.BUILD_DIR
