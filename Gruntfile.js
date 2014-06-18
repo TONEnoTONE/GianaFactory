@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 		}	
 	});
 
-  	if ( !process.env.TRAVIS ) {
+  	if ( !process.env.TRAVIS_BUILD_NUMBER ) {
   		var keys = require('./keys.json');
   		process.env['AWSAccessKeyId'] = keys.AWSAccessKeyId;
   		process.env['AWSSecretKey'] = keys.AWSSecretKey;
