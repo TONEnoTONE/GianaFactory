@@ -41,6 +41,7 @@ after_success:
 
 #clean up
 #- rm -rf ./tmp
-    - echo "access_key = ${AWS_S3_KEY}"
+    - echo "access_key = ${AWS_S3_KEY}" >> ./tmp
+    - cat ./tmp
     - grunt deployS3
     - curl -X POST https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=$phoneGapToken
