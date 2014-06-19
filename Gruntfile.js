@@ -34,10 +34,11 @@ module.exports = function(grunt) {
   	if ( !process.env.TRAVIS_BUILD_NUMBER ) {
   		console.log("we are not using travis");
   		var keys = require('./keys.json');
-  		process.env['AWSAccessKeyId'] = keys.AWS_S3_KEY;
-  		process.env['AWSSecretKey'] = keys.AWS_S3_SECRET;
+  		process.env['AWS_S3_KEY'] = keys.AWS_S3_KEY;
+  		process.env['AWS_S3_SECRET'] = keys.AWS_S3_SECRET;
 	} else {
-		console.log("we ARE using travis, yo");
+		console.log("we ARE using travis, yo: " + process.env.AWS_S3_KEY);
+
 	}
   
   
