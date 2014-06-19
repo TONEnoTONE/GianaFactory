@@ -15,7 +15,7 @@ env:
     #AWS_S3_SECRET
     - secure: "ZIhE0W2s+559TDMd75LtyI+HYidffBc3zexzE77mLhWBa4M4OvWLJjbpQn9xHtskskbhxmIVMf79ipfFVNIjq6VexJjutw6jq/lADBx+gAKEofZfPmK3S8u5hRQK4l7Jt8/NvYTS85ISCPkXQGnx9cDUIMxVgL5dmy2pnCQnBg0="
     #PHONEGAP_TOKEN
-    - secure: "Mliyv2Ih6Yh+XhMsqRaEiPjwBKC+4cgFHTkGzVCd76jE/+BhaY4S7QfJaMJM2z47nIquMoNALWmQVDQLjFHugp1YGsXf/AxXn85hJ5wmb+gGMiwRYvGJWu3hK9lPdHWWQ7s8ObttISlKJrLYZLMkRyzOVl0qBQNUlnNS3wR/CnU="
+    - secure: "i2OsgcGteSF0fQAgCkvbB94SAqM9bpnJ/k5/OhDydEMT2wgMiRBEtEahsdpCIogFOfw3UpYeQSlyk46BzHNyxkMqEtrvrIMjoBxmshJcPnhVs6c02g53jonCfulR6qyqQUvgTpOA3wq+YFsuVgvnPU/hTYb0OGI/bnI7rR/o1QE="
     #- BUILD_ENV: ${TRAVIS_BRANCH}
     #- POST_TO_PHONEGAP: true
 install:
@@ -41,8 +41,5 @@ after_success:
 
 #clean up
 #- rm -rf ./tmp
-    - echo "access_key = ${AWS_S3_KEY}" >> ./tmp
-    - echo "access_key = ${AWS_S3_SECRET}" >> ./tmp
-    - cat ./tmp
     - grunt deployS3
-    - curl -X POST https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=$phoneGapToken
+    - curl -X POST https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=$PHONEGAP_TOKEN
