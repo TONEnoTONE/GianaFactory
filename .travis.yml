@@ -28,6 +28,7 @@ script:
 
 before_script:
     - npm install -g grunt-cli
+    - npm install -g underscore-cli
 
 after_success: 
 #- cd $ROOT_DIR
@@ -41,7 +42,10 @@ after_success:
 
 #clean up
 #- rm -rf ./tmp
-    - echo "access_key = ${PHONEGAP_TOKEN}" >> ./tmp
-    - cat ./tmp
+    #- echo "access_key = ${PHONEGAP_TOKEN}" >> ./tmp
+    #- cat ./tmp
     - grunt deployS3
-    - curl -X POST https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=${PHONEGAP_TOKEN}
+
+    #trigger phonegap build
+    - curl -X PUT -d 'data={"pull":"true"}' https://build.phonegap.com/api/v1/apps/967572?auth_token=${PHONEGAP_TOKEN} | underscore pretty
+    - curl -X POST -d 'data={"keys":{"ios": {"id":194221,"key_pw":"GF"}}}' https://build.phonegap.com/api/v1/apps/967572/build?auth_token=${PHONEGAP_TOKEN} | underscore pretty
