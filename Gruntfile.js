@@ -34,21 +34,18 @@ module.exports = function(grunt) {
   	if ( !process.env.TRAVIS_BUILD_NUMBER ) {
   		console.log("we are not using travis");
   		var keys = require('./keys.json');
-  		process.env['AWSAccessKeyId'] = keys.AWSAccessKeyId;
-  		process.env['AWSSecretKey'] = keys.AWSSecretKey;
+  		process.env['AWSAccessKeyId'] = keys.AWS_S3_KEY;
+  		process.env['AWSSecretKey'] = keys.AWS_S3_SECRET;
 	} else {
-		console.log("we ARE using travis");
+		console.log("we ARE using travis, yo");
 	}
   
   
   	grunt.config(
 		'aws_s3', {
 	  	options: {
-	    	//process.env.BUILD_DIR
-	    	//accessKeyId: '<%= keys.AWSAccessKeyId %>', // Use the variables
-	    	//secretAccessKey: '<%= keys.AWSSecretKey %>' // You can also use env variables
-	    	accessKeyId: process.env.AWSAccessKeyId, // Use the variables
-	    	secretAccessKey: process.env.AWSSecretKey // You can also use env variables
+	    	accessKeyId: process.env.AWS_S3_KEY, // Use the variables
+	    	secretAccessKey: process.env.AWS_S3_SECRET // You can also use env variables
 	    },
 	  	dev: {
 	    	options: {
