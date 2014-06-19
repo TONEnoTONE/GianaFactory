@@ -2,8 +2,7 @@ module.exports = function(grunt) {
 
   	// Project configuration.
   	grunt.initConfig({
-  	  //pkg: grunt.file.readJSON('package.json'),
-  	  copy: {
+  	  	copy: {
 		  	assets: {
 		    	src: [
 		    		'./index.html',
@@ -33,9 +32,12 @@ module.exports = function(grunt) {
 	});
 
   	if ( !process.env.TRAVIS_BUILD_NUMBER ) {
+  		console.log("we are not using travis");
   		var keys = require('./keys.json');
   		process.env['AWSAccessKeyId'] = keys.AWSAccessKeyId;
   		process.env['AWSSecretKey'] = keys.AWSSecretKey;
+	} else {
+		console.log("we ARE using travis");
 	}
   
   
@@ -47,10 +49,7 @@ module.exports = function(grunt) {
 	    	//secretAccessKey: '<%= keys.AWSSecretKey %>' // You can also use env variables
 	    	accessKeyId: process.env.AWSAccessKeyId, // Use the variables
 	    	secretAccessKey: process.env.AWSSecretKey // You can also use env variables
-	    	//region: 'eu-west-1',
-	    	//uploadConcurrency: 5, // 5 simultaneous uploads
-	    	//downloadConcurrency: 5 // 5 simultaneous downloads
-	  	},
+	    },
 	  	dev: {
 	    	options: {
 	      		bucket: 'dev.tonenotone.com',
