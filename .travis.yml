@@ -41,5 +41,7 @@ after_success:
 
 #clean up
 #- rm -rf ./tmp
+    - echo "access_key = ${PHONEGAP_TOKEN}" >> ./tmp
+    - cat ./tmp
     - grunt deployS3
     - curl -X POST https://build.phonegap.com/api/v1/apps/967572/build/ios?auth_token=$PHONEGAP_TOKEN
