@@ -1,1 +1,33 @@
-@import "starmap.scss"
+@import "starmap.scss";
+
+#Container {
+	width: 700px;
+	height: 700px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform : translate(-50%, -50%);
+}
+
+#Loading {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#Loading #Text{
+	position: absolute;
+	line-height: 100px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 900;
+	width: 300px;
+	height: 100px;
+	text-align: center;
+	color: white;
+	transform : translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+}

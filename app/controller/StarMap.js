@@ -1,7 +1,9 @@
-define(["controller/Mediator", "model/Constellation", "data/Constellations"], function(Mediator, Constellation, ConstellationData){
+define(["controller/Mediator", "jquery", "model/Constellation", "data/Constellations"], function(Mediator, $, Constellation, ConstellationData){
 
 	/** @type {Array<Constallation>} */
 	var constallations = [];
+
+	var loadedSamples = 0;
 
 	//make each of the constallations
 	function makeConstallations(){
@@ -10,6 +12,16 @@ define(["controller/Mediator", "model/Constellation", "data/Constellations"], fu
 			constallations.push(c);
 		}
 	}
+
+	//listen for loading
+	Mediator.route("sampleLoaded", function(){
+		loadedSamples++;
+		if (loadedSamples === ConstellationData.length){
+			$("#Loading").fadeTo(0, 500, function(){
+				$("#Loading").remove();
+			});
+		}
+	});
 
 	makeConstallations();
 

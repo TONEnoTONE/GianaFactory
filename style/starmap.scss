@@ -1,12 +1,17 @@
-$StarMapWidth : 700px;
-$StarMapHeight : 700px;
-
 #StarMap {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: $StarMapWidth;
-	height: $StarMapWidth;
+	width: 100%;
+	height: 100%;
+}
+
+#StarMap #Background{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
 	background: url("../images/coverPlaceholder.png");
 	background-repeat : no-repeat;
 	background-size : 100% 100%;
@@ -23,5 +28,17 @@ $StarMapHeight : 700px;
 	width: 0%;
 	height: 0%;
 	font-size: 0px;
-	background-color : black;
+	// background: url("../images/whitecircle.gif");
+	background: black;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	opacity: .5;
+}
+
+.Edge {
+	width : 5%;
+	height : 0.5%;
+	background-color: black;
+	position: absolute;
+	opacity: .5;
 }
