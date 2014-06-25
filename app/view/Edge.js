@@ -36,7 +36,7 @@ define(["controller/Mediator", "view/StarCanvas",  "view/TouchShim"], function(M
 		var yDiff = position0.y - position1.y;
 		var xDiff = position0.x - position1.x;
 		if (xDiff === 0){
-			this.angle = 0;
+			this.angle = 90;
 		} else {
 			this.angle = Math.atan(yDiff / xDiff) * (180 / Math.PI);
 		}
