@@ -1,4 +1,5 @@
-define(["controller/Mediator", "jquery", "model/Constellation", "data/Constellations"], function(Mediator, $, Constellation, ConstellationData){
+define(["controller/Mediator", "jquery", "model/Constellation", "data/Constellations", "Tone/core/Transport"], 
+function(Mediator, $, Constellation, ConstellationData, Transport){
 
 	/** @type {Array<Constallation>} */
 	var constallations = [];
@@ -19,6 +20,7 @@ define(["controller/Mediator", "jquery", "model/Constellation", "data/Constellat
 		if (loadedSamples === ConstellationData.length){
 			$("#Loading").fadeTo(0, 500, function(){
 				$("#Loading").remove();
+				Transport.start("+1");
 			});
 		}
 	});

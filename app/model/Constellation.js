@@ -9,16 +9,15 @@ function(Mediator, Star, Edge, Player, Envelope){
 		/** @type {Tone.Player} */
 		this.player = new Player("./audio/"+description.sample, function(player){
 			Mediator.send("sampleLoaded");
-			// player.start();
 		});	
 		//sync the player to the transport
 		this.player.sync();
 		this.player.loop = true;
+		this.player.toMaster();
 
 		/** @type {Tone.Envelope} */
 		this.envelope = new Envelope("8n", 0, 1, "4m");
 
-		this.player.toMaster();
 		this.envelope.connect(this.player.output.gain);
 
 		/** @type {Array.<StarView>} */
@@ -49,7 +48,7 @@ function(Mediator, Star, Edge, Player, Envelope){
 
 	Constellation.prototype.touched = function(){
 		this.envelope.triggerAttack();
-		this.envelope.triggerRelease("+2m");
+		this.envelope.triggerRelease("+1m");
 	};
 
 	return Constellation;

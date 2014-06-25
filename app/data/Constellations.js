@@ -236,7 +236,7 @@ define(function(){
 				},
 				{
 					x : 79.3, 
-					y : 31.7, 
+					y : 33.7, 
 					size : 0.4
 				},
 				{
@@ -330,7 +330,7 @@ define(function(){
 				[7, 8],
 				[8, 9],
 				[9, 10],
-				[10, 4]
+				[10, 7]
 			]
 		},
 		//DONT FALL IN LOVE
@@ -505,14 +505,14 @@ define(function(){
 				[12, 13],
 				[13, 14],
 
-				[10, 15],
+				[11, 15],
 				[15, 16],
 				[16, 17]
 			]
 		},
 		{
 			song : "My Power Obey",
-			sample : "MyPowerObey.mp3",
+			sample : "PowerObey.mp3",
 			stars : [
 				{
 					x : 36, 
