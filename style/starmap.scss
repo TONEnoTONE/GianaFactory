@@ -12,11 +12,19 @@
 	left: 0px;
 	width: 100%;
 	height: 100%;
-	background: url("../images/coverPlaceholder.png");
+	// background: url("../images/coverPlaceholder.png");
 	background-repeat : no-repeat;
 	background-size : 100% 100%;
+	background-color: black;
 }
 
+#StarMap #EdgeCanvas{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
 
 /*
 	the stars
@@ -29,16 +37,31 @@
 	height: 0%;
 	font-size: 0px;
 	// background: url("../images/whitecircle.gif");
-	background: black;
 	border-radius: 50%;
 	transform: translate(-50%, -50%);
-	opacity: .5;
+	// opacity: .5;
+	z-index: 1;
+}
+
+.Star canvas{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .Edge {
 	width : 5%;
 	height : 0.5%;
-	background-color: black;
 	position: absolute;
-	opacity: .5;
+	z-index: 0;
+}
+
+.Edge canvas{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }

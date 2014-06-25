@@ -15,8 +15,29 @@ define(["controller/Mediator", "view/StarCanvas", "view/TouchShim"], function(Me
 			height : this.size + "%"
 		});
 
+		//make a canvas
+		var canvas = $("<canvas>").appendTo(this.element);
+		this.context = canvas[0].getContext("2d");
+		//size the context
+		this.context.canvas.width = canvas.width();
+		this.context.canvas.height = canvas.height();
+
+		this.draw();
+
 		//touch callback
 		this.element.on("touch mouseenter", callback);
+
+		Mediator.route("resize", this.draw.bind(this));
+	};
+
+	var twoPi = Math.PI * 2;
+
+	StarView.prototype.draw = function(){
+		this.context.beginPath();
+		this.context.fillStyle = "#fff";
+		var halfSize = this.context.canvas.width / 2;
+		this.context.arc(halfSize, halfSize, halfSize / 2, 0, twoPi, false);
+		this.context.fill();
 	};
 
 	return StarView;

@@ -20,7 +20,7 @@ function(Mediator, $, Constellation, ConstellationData, Transport){
 		if (loadedSamples === ConstellationData.length){
 			$("#Loading").fadeTo(0, 500, function(){
 				$("#Loading").remove();
-				Transport.start("+1");
+				//Transport.start("+1");
 			});
 		}
 	});

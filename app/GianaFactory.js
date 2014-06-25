@@ -9,4 +9,9 @@ require.config({
 
 require(["controller/Mediator", "controller/StarMap"], function(Mediator){
 	console.log("Giana Factory Interactive Album Cover v01");
+
+	//resize listener
+	$(window).resize(function(){
+		Mediator.send("resize");
+	});
 });
