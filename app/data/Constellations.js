@@ -1,17 +1,17 @@
 define(function(){
 	return [
-		//HEAD UP HIGH
+		//WALKING MIRROR
 		{
 			song : "Walking Mirror",
-			sample : "mirror.mp3",
+			sample : "WalkingMirror.mp3",
 			stars : [
 				{
-					x : 64.55, 
+					x : 64.45, 
 					y : 13.81, 
 					size : 1.1
 				},
 				{
-					x : 66.54, 
+					x : 66.44, 
 					y : 16.04,
 					size : 0.74
 				},
@@ -21,7 +21,7 @@ define(function(){
 					size : 0.74
 				},
 				{
-					x : 70.9, 
+					x : 70.8, 
 					y : 17.91,
 					size : 0.74
 				},
@@ -32,27 +32,41 @@ define(function(){
 				},
 			],
 			edges : [
-				[0, 1]
+				[0, 1],
+				[0, 2],
+				[1, 2],
+				[2, 3],
+				[2, 4],
+				[3, 4]
 			]
 		},
-		//HEAD UP HIGH
+		//LEMON MOON
 		{
-			song : "Head Up High",
-			sample : "headup.mp3",
+			song : "Lemon Moon",
+			sample : "WalkingMirror.mp3",
 			stars : [
 				{
 					x : 0, 
-					y : 0, 
-					size : 1
+					y : 0,
+					size: 1.1
 				},
 				{
-					x : 1, 
-					y : 0, 
-					size : 1
-				}
+					x : 2, 
+					y : 0,
+					size: 1.1
+				},
+				{
+					x : 4, 
+					y : 0,
+					size: 1.1
+				},
+				{
+					x : 6, 
+					y : 0,
+					size: 1.1
+				},
 			],
 			edges : [
-				[0, 1]
 			]
 		}
 	];
