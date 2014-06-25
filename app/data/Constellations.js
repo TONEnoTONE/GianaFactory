@@ -643,5 +643,44 @@ define(function(){
 				[8, 9]
 			]
 		},
+		{
+			song : "Our Hearts Are Pounding",
+			sample : "OurHearts.mp3",
+			stars : [
+				{
+					x : 38.8, 
+					y : 91.9, 
+					size : 0.6
+				},
+				{
+					x : 39.5, 
+					y : 91.1, 
+					size : 0.6
+				},
+				{
+					x : 40.2, 
+					y : 88.5, 
+					size : 0.6
+				},
+				{
+					x : 42.2, 
+					y : 88.3, 
+					size : 0.6
+				},
+				{
+					x : 43.1, 
+					y : 91.1, 
+					size : 0.6
+				},
+				
+			],
+			edges : [
+				[0, 1],
+				[1, 2],
+				[2, 3],
+				[3, 4],
+				[4, 1]
+			]
+		},
 	];
 });
