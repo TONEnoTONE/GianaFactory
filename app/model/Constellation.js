@@ -1,4 +1,5 @@
-define(["controller/Mediator", "view/Star"], function(Mediator, Star){
+define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", "Tone/component/Envelope"], 
+function(Mediator, Star, Edge, Player, Envelope){
 	/**
 	 *  @constructor
 	 *  @param {Object} description 
@@ -6,7 +7,19 @@ define(["controller/Mediator", "view/Star"], function(Mediator, Star){
 	var Constellation = function(description){
 
 		/** @type {Tone.Player} */
-		// this.player = new Player(description.sample);	
+		this.player = new Player("./audio/"+description.sample, function(player){
+			Mediator.send("sampleLoaded");
+			// player.start();
+		});	
+		//sync the player to the transport
+		this.player.sync();
+		this.player.loop = true;
+
+		/** @type {Tone.Envelope} */
+		this.envelope = new Envelope("8n", 0, 1, "4m");
+
+		this.player.toMaster();
+		this.envelope.connect(this.player.output.gain);
 
 		/** @type {Array.<StarView>} */
 		this.stars = [];
@@ -18,13 +31,25 @@ define(["controller/Mediator", "view/Star"], function(Mediator, Star){
 				x : starDesc.x,
 				y : starDesc.y
 			};
-			var s = new Star(pos, starDesc.size, description.song);
+			var s = new Star(pos, starDesc.size, this.touched.bind(this));
 			this.stars.push(s);
 		}
 
 		/** @type {Array.<Edge>} */
 		this.edges = [];
+		for (var i = 0; i < description.edges.length; i++){
+			var edge = description.edges[i];
+			var from = this.stars[edge[0]];
+			var to = this.stars[edge[1]];
+			var e = new Edge(from.position, to.position, this.touched.bind(this));
+			this.edges.push(e);
+		}
 
+	};
+
+	Constellation.prototype.touched = function(){
+		this.envelope.triggerAttack();
+		this.envelope.triggerRelease("+2m");
 	};
 
 	return Constellation;

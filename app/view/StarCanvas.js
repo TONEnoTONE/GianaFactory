@@ -3,7 +3,7 @@
  *
  *  it deals with scaling or resizing / rotation
  */
-define(["controller/Mediator", "jquery"], function(Mediator, $){
+define(["controller/Mediator", "jquery", "view/TouchShim"], function(Mediator, $){
 
 	var container = $("#StarMap");
 	
