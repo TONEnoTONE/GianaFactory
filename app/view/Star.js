@@ -5,7 +5,7 @@ define(["controller/Mediator", "view/StarCanvas", "view/TouchShim"], function(Me
 	 */
 	var StarView = function(position, size, callback){
 		this.position = position;
-		this.size = size * 2;
+		this.size = size * 3;
 		this.element = $("<div>", {"class" : "Star "}).appendTo(StarContainer);
 		// var translateString = ["translate3d( ", position.x + this.size / 2, "% , ", position.y + this.size / 2, "% , 0)" ].join("");
 		this.element.css({
@@ -38,6 +38,12 @@ define(["controller/Mediator", "view/StarCanvas", "view/TouchShim"], function(Me
 		var halfSize = this.context.canvas.width / 2;
 		this.context.arc(halfSize, halfSize, halfSize / 2, 0, twoPi, false);
 		this.context.fill();
+	};
+
+	StarView.prototype.setOpacity = function(val){
+		this.element.css({
+			opacity : val
+		});
 	};
 
 	return StarView;

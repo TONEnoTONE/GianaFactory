@@ -44,7 +44,13 @@ define(function(){
 		Mediator.send("update");
 	}
 
+	function twinkleLoop(){
+		setTimeout(twinkleLoop, 100);
+		Mediator.send("twinkleUpdate");
+	}
+
 	updateLoop();
+	twinkleLoop();
 
 	return Mediator;
 });

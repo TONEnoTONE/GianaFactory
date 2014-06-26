@@ -1,5 +1,5 @@
-define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", "Tone/component/Envelope"], 
-function(Mediator, Star, Edge, Player, Envelope){
+define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", "Tone/component/Envelope", "TERP"], 
+function(Mediator, Star, Edge, Player, Envelope, TERP){
 	/**
 	 *  @constructor
 	 *  @param {Object} description 
@@ -7,9 +7,7 @@ function(Mediator, Star, Edge, Player, Envelope){
 	var Constellation = function(description){
 
 		/** @type {Tone.Player} */
-		this.player = new Player("./audio/"+description.sample, function(player){
-			Mediator.send("sampleLoaded");
-		});	
+		this.player = new Player("./audio/"+description.sample, this.loaded.bind(this));
 		//sync the player to the transport
 		this.player.sync();
 		this.player.loop = true;
@@ -44,11 +42,34 @@ function(Mediator, Star, Edge, Player, Envelope){
 			this.edges.push(e);
 		}
 
+		Mediator.route("twinkleUpdate", this.twinkleUpdate.bind(this));
+
 	};
 
 	Constellation.prototype.touched = function(){
 		this.envelope.triggerAttack();
 		this.envelope.triggerRelease("+1m");
+	};
+
+	Constellation.prototype.loaded = function(){
+		Mediator.send("sampleLoaded");
+		//fade in the stars
+		this.stars.forEach(function(star){
+			setTimeout(function(){
+				star.setOpacity(1);	
+			}, Math.floor(Math.random() * 1000));
+		});
+	};
+
+	Constellation.prototype.twinkleUpdate = function(){
+		var envValue = this.envelope.control.getValue();
+		if (envValue > 0.1){
+			//twinkle the stars
+			this.stars.forEach(function(star){
+				var randomOpacity = TERP.scale(Math.random(), 1, 1 - envValue + 0.2);
+				star.setOpacity(randomOpacity);
+			});
+		}
 	};
 
 	return Constellation;

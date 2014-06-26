@@ -1,33 +1,70 @@
 @import "starmap.scss";
 
-#Container {
-	width: 700px;
-	height: 700px;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform : translate(-50%, -50%);
+body {
+	overflow: hidden;
 }
 
-#Loading {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-}
-
-#Loading #Text{
-	position: absolute;
-	line-height: 100px;
+@mixin fontStyle {
 	font-family: 'Lato', sans-serif;
 	font-weight: 900;
-	width: 300px;
-	height: 100px;
-	text-align: center;
-	color: white;
-	transform : translate(-50%, -50%);
+}
+
+@media (orientation:portrait) {
+	#DesertBackground{
+		width: auto;
+		height: 100%;
+	}	
+}
+
+@media (orientation:landscape) {
+	#DesertBackground{
+		width: 100%;
+		height: auto;
+	}	
+}
+
+#DesertBackground{
+	position: absolute;
 	top: 50%;
 	left: 50%;
+	// opacity: 0;
+	transform: translate(-50%, -50%);
+	transition: opacity 1s 0.5s;
+}
+
+#PlayButton {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 180px;
+	height: 60px;
+	line-height: 60px;
+	@include fontStyle;
+	font-weight: 700;
+	font-size: 32px;
+	text-align: center;
+	background-color: black;
+	color: white;
+	transform: translate(-50%, -50%);
+	opacity: 1;
+	transition: opacity 0.5s;
+}
+
+#PlayButton.Disappear {
+	pointer-events: none;
+	opacity: 0;
+}
+
+#PlayButton.Button {
+	cursor: pointer;
+}
+
+#PlayButton.Button:hover {
+	color: black;
+	background-color: white;
+}
+
+#PlayButton.Button:hover:active {
+	color: white;
+	background-color: transparent;
 }

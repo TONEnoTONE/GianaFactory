@@ -14,14 +14,13 @@ function(Mediator, $, Constellation, ConstellationData, Transport){
 		}
 	}
 
+	//square the starmap
+
 	//listen for loading
 	Mediator.route("sampleLoaded", function(){
 		loadedSamples++;
 		if (loadedSamples === ConstellationData.length){
-			$("#Loading").fadeTo(0, 500, function(){
-				$("#Loading").remove();
-				//Transport.start("+1");
-			});
+			Mediator.send("allLoaded");
 		}
 	});
 

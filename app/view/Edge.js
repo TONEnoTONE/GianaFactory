@@ -13,8 +13,15 @@ define(["controller/Mediator", "view/StarCanvas",  "view/TouchShim"], function(M
 	Mediator.route("resize", function(){
 		canvasWidth = edgeCanvas.width();
 		canvasHeight = edgeCanvas.height();
+		context.clearRect(0, 0, canvasWidth, canvasHeight);
 	});
 
+	//fade it in when it's loaded
+	Mediator.route("allLoaded", function(){
+		edgeCanvas.css({
+			opacity: 1
+		});
+	});
 
 	var EdgeView = function(position0, position1, callback){
 		this.getAngle(position0, position1);
@@ -74,6 +81,7 @@ define(["controller/Mediator", "view/StarCanvas",  "view/TouchShim"], function(M
 		};
 		context.moveTo(pointA.x, pointA.y);
 		context.lineTo(pointB.x, pointB.y);
+		context.lineWidth = canvasHeight / 600;
 		context.stroke();
 	};
 

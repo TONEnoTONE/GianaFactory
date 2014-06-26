@@ -1,6 +1,7 @@
 define(["jquery"], function($){
 
 	function triggerTouch(e){
+		e.preventDefault();
 		var touches = e.originalEvent.touches;
 		for (var i = 0; i < touches.length; i++){
 			var touch = touches.item(i);
@@ -10,5 +11,5 @@ define(["jquery"], function($){
 	}
 
 	$(document).on("touchmove", triggerTouch);
-	$(document).on("touchstart", triggerTouch);
+	// $(document).on("touchstart", triggerTouch);
 });
