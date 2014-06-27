@@ -5,6 +5,7 @@ require.config({
 		"jquery" : "../deps/jquery-2.1.1",
 		"domReady" : "../deps/domReady",
 		"TERP" : "../deps/TERP",
+		"GALocalStorage" : "../deps/GALocalStorage",
 		"Two" : "../deps/two",
 		"underscore" : "../deps/two",
 		"TWEEN" : "../deps/Tween",
@@ -17,8 +18,9 @@ require.config({
 	}
 });
 
+require(["controller/Mediator", "Tone/core/Transport", "manager/Analytics", "controller/StarMap", "!domReady", "controller/Mouse"], 
+function(Mediator, Transport, Analytics){
 
-require(["controller/Mediator", "Tone/core/Transport", "controller/StarMap", "!domReady", "controller/Mouse"], function(Mediator, Transport){
 	console.log("Giana Factory Interactive Album Cover v02");
 
 	Mediator.route("playClicked", function(){
@@ -26,4 +28,6 @@ require(["controller/Mediator", "Tone/core/Transport", "controller/StarMap", "!d
 	});	
 
 	Mediator.send("init");
+
+	Analytics.trackEvent("App", "Session Started");
 });
