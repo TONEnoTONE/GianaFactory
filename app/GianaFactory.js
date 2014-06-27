@@ -1,7 +1,7 @@
 require.config({
 	baseUrl : "./app", 
 	paths : {
-		"Tone" : "../../Tone.js/Tone",
+		"Tone" : "../deps/Tone",
 		"jquery" : "../deps/jquery-2.1.1",
 		"domReady" : "../deps/domReady",
 		"TERP" : "../deps/TERP",
