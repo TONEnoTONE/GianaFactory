@@ -1,49 +1,43 @@
-define(["controller/Mediator", "view/StarCanvas", "view/TouchShim"], function(Mediator, StarContainer){
+define(["controller/Mediator", "view/Drawing", "model/Oscillator", "TWEEN", "controller/Mouse"], function(Mediator, Drawing, Oscillator, TWEEN, Mouse){
+
 	/**
 	 *  @constructor
 	 *  @param {Object} description
 	 */
 	var StarView = function(position, size, callback){
 		this.position = position;
-		this.size = size * 3;
-		this.element = $("<div>", {"class" : "Star "}).appendTo(StarContainer);
-		// var translateString = ["translate3d( ", position.x + this.size / 2, "% , ", position.y + this.size / 2, "% , 0)" ].join("");
-		this.element.css({
-			left: position.x + "%",
-			top: position.y + "%",
-			width : this.size + "%",
-			height : this.size + "%"
-		});
+		this.size = size;
+		this.element = Drawing.context.makeCircle(this.position.x, this.position.y, this.size / 2);
+		this.element.addTo(Drawing.stars);
+		this.element.fill = "#fff";
+		this.element.noStroke();
+		this.element.scale = 0;
 
-		//make a canvas
-		var canvas = $("<canvas>").appendTo(this.element);
-		this.context = canvas[0].getContext("2d");
-		//size the context
-		this.context.canvas.width = canvas.width();
-		this.context.canvas.height = canvas.height();
+		this.oscillatorClip = 0;
 
-		this.draw();
+		this.oscillator = new Oscillator(Math.random());
 
-		//touch callback
-		this.element.on("touch mouseenter", callback);
+		Mouse.insertStar(this.position, this.size, callback);
 
-		Mediator.route("resize", this.draw.bind(this));
+		Mediator.route("update", this.update.bind(this));
 	};
 
-	var twoPi = Math.PI * 2;
-
-	StarView.prototype.draw = function(){
-		this.context.beginPath();
-		this.context.fillStyle = "#fff";
-		var halfSize = this.context.canvas.width / 2;
-		this.context.arc(halfSize, halfSize, halfSize / 2, 0, twoPi, false);
-		this.context.fill();
+	StarView.prototype.update = function(){
+		if (this.oscillatorClip > 0){
+			this.element.scale = 1 + this.oscillator.getValue() * this.oscillatorClip;
+		}
 	};
 
-	StarView.prototype.setOpacity = function(val){
-		this.element.css({
-			opacity : val
-		});
+	StarView.prototype.appear = function(duration, delay){
+		var elem = this.element;
+		var tween = new TWEEN.Tween({scale : 0})
+			.to({scale : 1}, duration)
+			.onUpdate(function(){
+				elem.scale = this.scale;
+			})
+			.easing(TWEEN.Easing.Back.Out)
+			.delay(delay)
+			.start();
 	};
 
 	return StarView;

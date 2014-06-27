@@ -1,5 +1,5 @@
-define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", "Tone/component/Envelope", "TERP"], 
-function(Mediator, Star, Edge, Player, Envelope, TERP){
+define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", "Tone/component/Envelope", "TERP", "model/Envelope"], 
+function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 	/**
 	 *  @constructor
 	 *  @param {Object} description 
@@ -21,6 +21,8 @@ function(Mediator, Star, Edge, Player, Envelope, TERP){
 		/** @type {Array.<StarView>} */
 		this.stars = [];
 
+		this.clipEnvelope = null;
+
 		//make all the stars
 		for (var i = 0; i < description.stars.length; i++){
 			var starDesc = description.stars[i];
@@ -28,7 +30,7 @@ function(Mediator, Star, Edge, Player, Envelope, TERP){
 				x : starDesc.x,
 				y : starDesc.y
 			};
-			var s = new Star(pos, starDesc.size, this.touched.bind(this));
+			var s = new Star(pos, starDesc.size, this.touched.bind(this), i);
 			this.stars.push(s);
 		}
 
@@ -47,29 +49,44 @@ function(Mediator, Star, Edge, Player, Envelope, TERP){
 	};
 
 	Constellation.prototype.touched = function(){
+		if (this.clipEnvelope !== null){
+			this.clipEnvelope.stop();
+		}
+		this.clipEnvelope = new ClipEnvelope(this.envelope.toSeconds("8n") * 1000, this.envelope.toSeconds("5m") * 1000, this.endTwinkle.bind(this));
 		this.envelope.triggerAttack();
 		this.envelope.triggerRelease("+1m");
 	};
 
 	Constellation.prototype.loaded = function(){
+		var animateDuration = 1000;
 		Mediator.send("sampleLoaded");
 		//fade in the stars
 		this.stars.forEach(function(star){
-			setTimeout(function(){
-				star.setOpacity(1);	
-			}, Math.floor(Math.random() * 1000));
+			star.appear(animateDuration, Math.floor(Math.random() * animateDuration * 2));	
+		});
+		this.edges.forEach(function(edge){
+			edge.appear(animateDuration, Math.floor(Math.random() * animateDuration * 2));	
 		});
 	};
 
 	Constellation.prototype.twinkleUpdate = function(){
-		var envValue = this.envelope.control.getValue();
-		if (envValue > 0.1){
-			//twinkle the stars
-			this.stars.forEach(function(star){
-				var randomOpacity = TERP.scale(Math.random(), 1, 1 - envValue + 0.2);
-				star.setOpacity(randomOpacity);
-			});
+		if (this.clipEnvelope !== null){
+			var clipVal = this.clipEnvelope.getValue();
+			if (clipVal > 0){
+				for (var i = 0; i < this.stars.length; i++){
+					var star = this.stars[i];
+					star.oscillatorClip = clipVal;
+				}
+			}
 		}
+	};
+
+	Constellation.prototype.endTwinkle = function(){
+		for (var i = 0; i < this.stars.length; i++){
+			var star = this.stars[i];
+			star.oscillatorClip = 0;
+		}
+		this.clipEnvelope = null;
 	};
 
 	return Constellation;
