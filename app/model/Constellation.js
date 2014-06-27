@@ -44,7 +44,7 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 			this.edges.push(e);
 		}
 
-		Mediator.route("twinkleUpdate", this.twinkleUpdate.bind(this));
+		Mediator.route("update", this.twinkleUpdate.bind(this));
 
 	};
 
