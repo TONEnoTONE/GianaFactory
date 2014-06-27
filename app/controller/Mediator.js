@@ -46,7 +46,7 @@ define(["TWEEN"], function(TWEEN){
 	}
 
 	function twinkleUpdate(){
-		setTimeout(twinkleUpdate, 100);
+		setTimeout(twinkleUpdate, 50);
 		Mediator.send("twinkleUpdate");
 	}
 

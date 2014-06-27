@@ -27,7 +27,9 @@ function(Mediator, Transport, Analytics){
 		Transport.start("+0.5");
 	});	
 
-	Mediator.send("init");
+	setTimeout(function(){
+		Mediator.send("init");
+	}, 1000);
 
 	Analytics.trackEvent("App", "Session Started");
 });
