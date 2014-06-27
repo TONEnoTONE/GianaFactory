@@ -1,4 +1,4 @@
-define(function(){
+define(["TWEEN"], function(TWEEN){
 	
 	/**
 	 * MicroEvent - to make any js object an event emitter (server or browser)
@@ -42,15 +42,16 @@ define(function(){
 	function updateLoop(){
 		requestAnimationFrame(updateLoop);
 		Mediator.send("update");
+		TWEEN.update();
 	}
 
-	function twinkleLoop(){
-		setTimeout(twinkleLoop, 100);
+	function twinkleUpdate(){
+		setTimeout(twinkleUpdate, 100);
 		Mediator.send("twinkleUpdate");
 	}
 
 	updateLoop();
-	twinkleLoop();
+	twinkleUpdate();
 
 	return Mediator;
 });
