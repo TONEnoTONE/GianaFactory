@@ -1,4 +1,4 @@
-define(["jquery", "rbush", "view/Size", "controller/Mediator"], function($, rbush, Size, Mediator){
+define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor"], function($, rbush, Size, Mediator, Cursor){
 
 	var tree = rbush(5);
 	var allLoaded = false;
