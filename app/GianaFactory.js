@@ -1,15 +1,16 @@
 require.config({
 	baseUrl : "./app", 
 	paths : {
-		"Tone" : "../../Tone.js/Tone",
+		"Tone" : "../../deps/Tone",
 		"jquery" : "../deps/jquery-2.1.1",
 		"domReady" : "../deps/domReady",
-		"TERP" : "../deps/TERP"
+		"TERP" : "../deps/TERP",
+		"GALocalStorage" : "../deps/GALocalStorage"
 	}
 });
 
 
-require(["controller/Mediator", "Tone/core/Transport", "controller/StarMap", "!domReady"], function(Mediator, Transport){
+require([ "manager/Analytics", "controller/Mediator", "Tone/core/Transport", "controller/StarMap", "!domReady" ], function(Analytics, Mediator, Transport){
 	console.log("Giana Factory Interactive Album Cover v01");
 
 	//resize listener
@@ -17,8 +18,9 @@ require(["controller/Mediator", "Tone/core/Transport", "controller/StarMap", "!d
 		Mediator.send("resize");
 	});
 
-
 	Mediator.route("playClicked", function(){
 		Transport.start("+0.5");
-	});	
+	});
+
+	Analytics.trackEvent("App", "Session Started");
 });
