@@ -40,7 +40,7 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 	Mediator.route("allLoaded", function(){
 		playButton.text("PLAY");
 		playButton.addClass("Button");
-		playButton.click(function(){
+		playButton.on("click touchend", function(){
 			Mediator.send("playClicked");
 			playButton.addClass("Disappear");
 		});
