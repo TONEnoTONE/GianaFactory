@@ -1,7 +1,7 @@
 {
   "name": "GianaFactory",
   "version": "0.0.0",
-  "description": "",
+  "description": "`npm install`",
   "main": "index.js",
   "dependencies": {
     "express": "~4.4.3"
@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/TONEnoTONE/GianaFactory/issues"
   },
-  "homepage": "https://github.com/TONEnoTONE/GianaFactory"
+  "homepage": "https://github.com/TONEnoTONE/GianaFactory",
+  "scripts": {
+    "start": "node server.js"
+  }
 }

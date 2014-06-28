@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 		        	// Replace all 'use strict' statements in the code with a single one at the top
 		        	process: function(src, filepath) {
 		        		// maybe not the best use of the concat lib....
-		        		return returnPrettyVersionFile(buildNumber, 'UA-48335391-4');
+		        		return returnPrettyVersionFile('v0.' + buildNumber, 'UA-48335391-4');
 		        	}
 		        },
 		      	files: {
