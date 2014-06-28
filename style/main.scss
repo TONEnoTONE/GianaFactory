@@ -50,6 +50,27 @@ body {
 	opacity: 1;
 	transition: opacity 0.5s;
 }
+#VersionInfo {
+	position: absolute;
+	top: 70px;
+	left: 10px;
+	width: 180px;
+	height: 16px;
+	line-height: 16px;
+	@include fontStyle;
+	font-weight: 500;
+	font-size: 13px;
+	text-align: center;
+	background-color: grey;
+	color: slate;
+	opacity: 1;
+	transition: opacity 0.5s;
+}
+
+#VersionInfo.Disappear {
+	pointer-events: none;
+	opacity: 0;
+}
 
 #PlayButton.Disappear {
 	pointer-events: none;

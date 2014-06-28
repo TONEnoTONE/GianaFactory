@@ -19,6 +19,7 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 	});
 
 	var playButton = $("#PlayButton");
+	var versionInfo = $("#VersionInfo");
 	var playButtonText = [];
 	
 	//make sure it's square
@@ -39,10 +40,12 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 
 	Mediator.route("allLoaded", function(){
 		playButton.text("PLAY");
+		versionInfo.addClass("Disappear");
 		playButton.addClass("Button");
 		playButton.on("click touchend", function(){
 			Mediator.send("playClicked");
 			playButton.addClass("Disappear");
+			versionInfo.addClass("Disappear");
 		});
 	});
 
