@@ -9,16 +9,20 @@ require.config({
 		"Two" : "../deps/two",
 		"underscore" : "../deps/two",
 		"TWEEN" : "../deps/Tween",
-		"rbush" : "../deps/rbush"
+		"rbush" : "../deps/rbush",
+		"physics" : "../deps/physics"
 	},
 	shim : {
 		"TWEEN" : {
 			exports : "TWEEN"
+		},
+		"physics" : {
+			exports : "Physics"
 		}
 	}
 });
 
-require(["controller/Mediator", "Tone/core/Transport", "manager/Analytics", "controller/StarMap", "!domReady", "controller/Mouse"], 
+require(["controller/Mediator", "Tone/core/Transport", "manager/Analytics", "controller/Physics", "controller/StarMap", "!domReady", "controller/Mouse"], 
 function(Mediator, Transport, Analytics){
 
 	console.log("Giana Factory Interactive Album Cover v02");
