@@ -9,11 +9,15 @@ require.config({
 		"Two" : "../deps/two",
 		"underscore" : "../deps/two",
 		"TWEEN" : "../deps/Tween",
-		"rbush" : "../deps/rbush"
+		"rbush" : "../deps/rbush",
+		"physics" : "../deps/physics"
 	},
 	shim : {
 		"TWEEN" : {
 			exports : "TWEEN"
+		},
+		"physics" : {
+			exports : "Physics"
 		}
 	}
 });

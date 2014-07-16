@@ -38,9 +38,9 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 		this.edges = [];
 		for (var i = 0; i < description.edges.length; i++){
 			var edge = description.edges[i];
-			var from = this.stars[edge[0]];
-			var to = this.stars[edge[1]];
-			var e = new Edge(from.position, to.position, this.touched.bind(this));
+			var from = this.stars[edge[0]].particle;
+			var to = this.stars[edge[1]].particle;
+			var e = new Edge(from, to, this.touched.bind(this));
 			this.edges.push(e);
 		}
 

@@ -1,4 +1,5 @@
-define(["controller/Mediator", "view/Drawing", "model/Oscillator", "TWEEN", "controller/Mouse"], function(Mediator, Drawing, Oscillator, TWEEN, Mouse){
+define(["controller/Mediator", "jquery", "view/Drawing", "model/Oscillator", "TWEEN", "controller/Mouse", "controller/Physics"], 
+function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 
 	/**
 	 *  @constructor
@@ -13,19 +14,27 @@ define(["controller/Mediator", "view/Drawing", "model/Oscillator", "TWEEN", "con
 		this.element.noStroke();
 		this.element.scale = 0;
 
-		this.oscillatorClip = 0;
+		this.callback = callback;
 
-		this.oscillator = new Oscillator(Math.random());
+		//the physics
+		this.particle = Physics.makeParticle(1, this.position.x, this.position.y);
+		this.anchor = Physics.makeParticle(100, this.position.x, this.position.y);
+		this.anchor.makeFixed();
+		this.attraction = Physics.makeSpring(this.particle, this.anchor, 1, 0.001, 0);
 
-		Mouse.insertStar(this.position, this.size, callback);
+		Mouse.insertStar(this.position, this.size, this.touch.bind(this));
 
 		Mediator.route("update", this.update.bind(this));
 	};
 
 	StarView.prototype.update = function(){
-		if (this.oscillatorClip > 0){
-			this.element.scale = 1 + this.oscillator.getValue() * this.oscillatorClip;
+		if (!this.particle.resting()){
+			this.element.translation.set(this.particle.position.x, this.particle.position.y);
 		}
+	};
+
+	StarView.prototype.touch = function(vector){
+		this.particle.velocity.set( -vector.x / 10, -vector.y / 10);
 	};
 
 	StarView.prototype.appear = function(duration, delay){

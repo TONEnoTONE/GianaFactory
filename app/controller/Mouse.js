@@ -3,19 +3,35 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor"], f
 	var tree = rbush(5);
 	var allLoaded = false;
 
+	var touchPoints = {};
+
 	function triggerTouch(e){
 		e.preventDefault();
 		var touches = e.originalEvent.touches;
 		for (var i = 0; i < touches.length; i++){
 			var touch = touches.item(i);
+			if (!touchPoints[touch.identifier]){
+				touchPoints[touch.identifier] = new Cursor();
+			}
+			touchPoints[touch.identifier].addPoint(touch.clientX, touch.clientY);
 			//touch.clientX, touch.clientY
-			testTouch(touch.clientX, touch.clientY);
+			testTouch(touch.clientX, touch.clientY, touch.identifier);
 		}
 	}
 
-	function testTouch(x, y){
+	function testTouch(x, y, id){
+		//update the point
+		if (!touchPoints[id]){
+			// touchPoints[id] = new Cursor();
+			touchPoints[id] = {};
+			touchPoints[id].position = {
+				x : x,
+				y : y
+			};
+		}
+		// touchPoints[id].setPoint(x, y);
 		if (!allLoaded){
-			return;
+			// return;
 		}
 		var pos = Size.getSize();
 		var leftBounding = pos.left;
@@ -30,9 +46,18 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor"], f
 			var scaledY = (y - topBounding) / pos.size * 100;
 			var items = tree.search([scaledX - searchSize, scaledY - searchSize, scaledX + searchSize, scaledY + searchSize]);
 			if (items.length > 0){
-				items[0][4]();
+				var vector = {
+					x : touchPoints[id].position.x - x,
+					y : touchPoints[id].position.y - y,
+				}
+				items[0][4](vector);
 			}
 		}
+		//update the old coord
+		touchPoints[id].position = {
+			x : x,
+			y : y
+		};
 	}
 
 	Mediator.route("playClicked", function(){
@@ -40,7 +65,7 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor"], f
 	});
 	$(document).on("touchmove touchstart", triggerTouch);
 	$(document).on("mousemove", function(e){
-		testTouch(e.clientX, e.clientY);
+		testTouch(e.clientX, e.clientY, 0);
 	});
 
 	return {
