@@ -11,9 +11,9 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor"], f
 		for (var i = 0; i < touches.length; i++){
 			var touch = touches.item(i);
 			if (!touchPoints[touch.identifier]){
-				touchPoints[touch.identifier] = new Cursor();
+				// touchPoints[touch.identifier] = new Cursor();
 			}
-			touchPoints[touch.identifier].addPoint(touch.clientX, touch.clientY);
+			// touchPoints[touch.identifier].addPoint(touch.clientX, touch.clientY);
 			//touch.clientX, touch.clientY
 			testTouch(touch.clientX, touch.clientY, touch.identifier);
 		}
