@@ -1,4 +1,5 @@
 build/
 cordova/
+node_modules/
 *.scssc
 keys.json

@@ -21,6 +21,7 @@ env:
 install:
     - npm install -g grunt-cli
     - npm install -g underscore-cli
+    - npm install
 
 after_success:
     - grunt deployS3
