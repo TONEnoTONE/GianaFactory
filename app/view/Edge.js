@@ -12,7 +12,7 @@ define(["controller/Mediator", "view/Drawing", "controller/Physics"], function(M
 		this.position1 = position1;
 
 		var len = position0.distanceTo(position1);
-		this.spring = Physics.makeSpring(position0, position1, 1, 0.001, len);
+		this.spring = Physics.makeSpring(position0, position1, 1, 0.1, len);
 
 		Mediator.route("update", this.update.bind(this));
 	};
