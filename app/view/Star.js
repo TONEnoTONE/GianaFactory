@@ -17,10 +17,10 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 		this.callback = callback;
 
 		//the physics
-		this.particle = Physics.makeParticle(1, this.position.x, this.position.y);
+		this.particle = Physics.makeParticle(8, this.position.x, this.position.y);
 		this.anchor = Physics.makeParticle(100, this.position.x, this.position.y);
 		this.anchor.makeFixed();
-		this.attraction = Physics.makeSpring(this.particle, this.anchor, 1, 0.001, 0);
+		this.attraction = Physics.makeSpring(this.particle, this.anchor, 1, 0.5, 0);
 
 		Mouse.insertStar(this.position, this.size, this.touch.bind(this));
 
@@ -34,7 +34,9 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 	};
 
 	StarView.prototype.touch = function(vector){
-		this.particle.velocity.set( -vector.x / 10, -vector.y / 10);
+		var divisor = 20;
+		this.particle.velocity.set( -vector.x / divisor, -vector.y / divisor);
+		this.callback();
 	};
 
 	StarView.prototype.appear = function(duration, delay){

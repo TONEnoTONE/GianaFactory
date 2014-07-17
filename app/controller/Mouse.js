@@ -31,7 +31,7 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor"], f
 		}
 		// touchPoints[id].setPoint(x, y);
 		if (!allLoaded){
-			// return;
+			return;
 		}
 		var pos = Size.getSize();
 		var leftBounding = pos.left;
@@ -45,10 +45,17 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor"], f
 			var scaledX = (x - leftBounding) / pos.size * 100;
 			var scaledY = (y - topBounding) / pos.size * 100;
 			var items = tree.search([scaledX - searchSize, scaledY - searchSize, scaledX + searchSize, scaledY + searchSize]);
+			var maxChange = 30;
+			var xDiff = touchPoints[id].position.x - x;
+			xDiff = Math.max(xDiff, -maxChange);
+			xDiff = Math.min(xDiff, maxChange);
+			var yDiff = touchPoints[id].position.y - y;
+			yDiff = Math.max(yDiff, -maxChange);
+			yDiff = Math.min(yDiff, maxChange);
 			if (items.length > 0){
 				var vector = {
-					x : touchPoints[id].position.x - x,
-					y : touchPoints[id].position.y - y,
+					x : xDiff,
+					y : yDiff
 				}
 				items[0][4](vector);
 			}
