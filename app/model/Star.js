@@ -1,26 +1,25 @@
-define(["controller/Mediator", "view/Star", "TERP", "Tone/source/Player", "Tone/core/Master"], function(Mediator, StarView, TERP, Player){
-	var Star = function(index){
+define(["controller/Mediator", "view/Star", "TERP", "Tone/source/Player", "Tone/core/Master"], 
+	function(Mediator, StarView, TERP, Player, Master){
+	var Star = function(data){
 		//make a random position and size
-		var theta = Math.random()*Math.PI * 2;
-		var radius = Math.random()*50;
-		var x = radius * Math.cos(theta) + 50;
-		var y = radius * Math.sin(theta) + 50;
+		var x = data.x;
+		var y = data.y;
+		var fileName = data.sample;
 		this.position = {
 			x : x,
 			y : y
 		};
-		this.size = TERP.scale(Math.random(), 0.4, 1.1);
+		this.size = data.size * 1.5;
 
-		this.player = new Player("./audio/stars/"+index.toString()+".mp3", this.loaded.bind(this));
+		this.player = new Player("./audio/stars/"+fileName.toString()+".mp3", this.loaded.bind(this));
 		this.player.retrigger = true;
 		this.player.toMaster();
-
 		this.view = new StarView(this.position, this.size, this.touched.bind(this));
 	};
 
 	Star.prototype.loaded = function(){
 		Mediator.send("sampleLoaded");
-		this.view.setOpacity(1);
+		this.view.appear(500, 0);
 	};
 
 	Star.prototype.touched = function(){

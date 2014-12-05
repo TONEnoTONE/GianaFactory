@@ -14,7 +14,7 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 		this.player.toMaster();
 
 		/** @type {Tone.Envelope} */
-		this.envelope = new Envelope("8n", 0, 1, "4m");
+		this.envelope = new Envelope("16n", 0, 1, "1m");
 
 		this.envelope.connect(this.player.output.gain);
 
@@ -52,9 +52,9 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 		if (this.clipEnvelope !== null){
 			this.clipEnvelope.stop();
 		}
-		this.clipEnvelope = new ClipEnvelope(this.envelope.toSeconds("8n") * 1000, this.envelope.toSeconds("5m") * 1000, this.endTwinkle.bind(this));
+		this.clipEnvelope = new ClipEnvelope(this.envelope.toSeconds("8n") * 1000, this.envelope.toSeconds("2m") * 1000, this.endTwinkle.bind(this));
 		this.envelope.triggerAttack();
-		this.envelope.triggerRelease("+1m");
+		this.envelope.triggerRelease("+2n");
 	};
 
 	Constellation.prototype.loaded = function(){
