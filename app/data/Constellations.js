@@ -40,10 +40,10 @@ define(function(){
 				[3, 4]
 			]
 		},
-		//LEMON MOON
+		//LEMON MOON 0
 		{
 			song : "Lemon Moon",
-			sample : "LemonMoon.mp3",
+			sample : "LemonMoon0.mp3",
 			stars : [
 				{
 					x : 60.9, 
@@ -85,7 +85,22 @@ define(function(){
 					y : 28.7,
 					size: 0.7
 				},
-				//second group
+			],
+			edges : [
+				[0, 1],
+				[1, 2],
+				[2, 3],
+				[2, 4],
+				[4, 5],
+				[4, 6],
+				[4, 7],
+			]
+		},
+		//LEMON MOON 1
+		{
+			song : "Lemon Moon",
+			sample : "LemonMoon1.mp3",
+			stars : [
 				{
 					x : 59.1, 
 					y : 27.8,
@@ -181,31 +196,23 @@ define(function(){
 				[0, 1],
 				[1, 2],
 				[2, 3],
-				[2, 4],
+				[3, 4],
 				[4, 5],
+				[5, 1],
 				[4, 6],
-				[4, 7],
-
+				[6, 7],
+				[7, 8],
 				[8, 9],
 				[9, 10],
 				[10, 11],
 				[11, 12],
+
 				[12, 13],
-				[13, 9],
-				[12, 14],
-				[14, 15],
+				[13, 14],
+
+				[11, 15],
 				[15, 16],
-				[16, 17],
-				[17, 18],
-				[18, 19],
-				[19, 20],
-
-				[20, 21],
-				[21, 22],
-
-				[19, 23],
-				[23, 24],
-				[24, 25]
+				[16, 17]
 			]
 		},
 		//I LIVE AT NIGHT
@@ -683,7 +690,7 @@ define(function(){
 		},
 		{
 			song : "In Between",
-			sample : "InBetween.mp3",
+			sample : "InBetween0.mp3",
 			stars : [
 				{
 					x : 49.1, 
@@ -891,7 +898,7 @@ define(function(){
 		},
 		{
 			song : "It's Your Life",
-			sample : "ItsYourLife.mp3",
+			sample : "ItsYourLife0.mp3",
 			stars : [
 				{
 					x : 66.8, 
