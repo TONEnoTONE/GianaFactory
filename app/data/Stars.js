@@ -556,43 +556,43 @@ define(function(){
 			x : 17.7, 
 			y : 70.5,
 			size : 0.6,
-			sample : "My_power_Obey/0"
+			sample : "My_Power_Obey/0"
 		}, 
 		{
 			x : 23.7, 
 			y : 75.3,
 			size : 0.5,
-			sample : "My_power_Obey/1"
+			sample : "My_Power_Obey/1"
 		}, 
 		{
 			x : 24.5, 
 			y : 78.4,
 			size : 0.7,
-			sample : "My_power_Obey/2"
+			sample : "My_Power_Obey/2"
 		}, 
 		{
 			x : 28.5, 
 			y : 80.1,
 			size : 0.7,
-			sample : "My_power_Obey/3"
+			sample : "My_Power_Obey/3"
 		}, 
 		{
 			x : 34.9, 
 			y : 70.2,
 			size : 0.5,
-			sample : "My_power_Obey/4"
+			sample : "My_Power_Obey/4"
 		}, 
 		{
 			x : 36.3, 
 			y : 71.5,
 			size : 0.5,
-			sample : "My_power_Obey/5"
+			sample : "My_Power_Obey/5"
 		}, 
 		{
 			x : 38.6, 
 			y : 70.8,
 			size : 0.5,
-			sample : "My_power_Obey/6"
+			sample : "My_Power_Obey/6"
 		}, 
 
 
