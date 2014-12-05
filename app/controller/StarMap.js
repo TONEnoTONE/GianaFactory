@@ -1,12 +1,12 @@
-define(["controller/Mediator", "jquery", "model/Constellation", "data/Constellations", "model/Star", "Tone/core/Transport", "view/Map"], 
-function(Mediator, $, Constellation, ConstellationData, Star, Transport){
+define(["controller/Mediator", "jquery", "model/Constellation", "data/Constellations", "model/Star", "Tone/core/Transport", "view/Map", "data/Stars"], 
+function(Mediator, $, Constellation, ConstellationData, Star, Transport, Map, StarData){
 
 	/** @type {Array<Constallation>} */
 	var constallations = [];
 	/** @type {Array<Stars>} */
 	var stars = [];
 
-	var starCount = 0;
+	var starCount = StarData.length;
 
 	var loadedSamples = 0;
 
@@ -30,13 +30,14 @@ function(Mediator, $, Constellation, ConstellationData, Star, Transport){
 
 	//make all the stars
 	function makeStars(){
-		for (var i = 0; i < starCount; i++){
-			var s = new Star(i);
+		for (var i = 0; i < StarData.length; i++){
+			var data = StarData[i]
+			var s = new Star(data);
 			stars.push(s);
 		}
 	}
 
-	// makeStars();
+	makeStars();
 	makeConstallations();
 
 });
