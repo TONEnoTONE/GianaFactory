@@ -1,18 +1,20 @@
 define(["controller/Mediator", "view/Drawing", "controller/Physics"], function(Mediator, Drawing, Physics){
 	
 
-	var EdgeView = function(position0, position1, callback){
-		this.element = Drawing.context.makeLine(position0.position.x, position0.position.y, position1.position.x, position1.position.y);
+	var EdgeView = function(particle0, particle1, callback){
+		this.particle0 = particle0;
+		this.particle1 = particle1;
+
+		var pos0 = particle0.getPosition();
+		var pos1 = particle1.getPosition();
+
+		this.element = Drawing.context.makeLine(pos0.x, pos0.y, pos1.x, pos1.y);
 		this.element.addTo(Drawing.stars);
 		this.element.linewidth = 0.18;
 		this.element.stroke = "#fff";
 		this.element.opacity = 0;
 
-		this.position0 = position0;
-		this.position1 = position1;
-
-		var len = position0.distanceTo(position1);
-		this.spring = Physics.makeSpring(position0, position1, 1, 0.1, len);
+		this.spring = Physics.makeSpring(particle0, particle1);
 
 		Mediator.route("update", this.update.bind(this));
 	};
@@ -30,13 +32,16 @@ define(["controller/Mediator", "view/Drawing", "controller/Physics"], function(M
 	};
 
 	EdgeView.prototype.update = function(){
-		if (!this.position0.resting()){
-			var translation = this.element.translation;
-			this.element.vertices[0].set(this.position0.position.x - translation.x, this.position0.position.y - translation.y);
+		var translation;
+		if (!this.particle0.isResting()){
+			translation = this.element.translation;
+			var pos0 = this.particle0.getPosition();
+			this.element.vertices[0].set(pos0.x - translation.x, pos0.y - translation.y);
 		}
-		if (!this.position1.resting()){
-			var translation = this.element.translation;
-			this.element.vertices[1].set(this.position1.position.x - translation.x, this.position1.position.y - translation.y);
+		if (!this.particle1.isResting()){
+			translation = this.element.translation;
+			var pos1 = this.particle1.getPosition();
+			this.element.vertices[1].set(pos1.x - translation.x, pos1.y - translation.y);
 		}
 	};
 

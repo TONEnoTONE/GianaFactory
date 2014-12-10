@@ -14,7 +14,7 @@ define(["controller/Mediator", "view/Star", "TERP", "Tone/source/Player", "Tone/
 		this.player = new Player("./audio/stars/"+fileName.toString()+".mp3", this.loaded.bind(this));
 		this.player.retrigger = true;
 		this.player.toMaster();
-		this.view = new StarView(this.position, this.size, this.touched.bind(this));
+		this.view = new StarView(this.position, this.size, this.touched.bind(this), true);
 	};
 
 	Star.prototype.loaded = function(){
