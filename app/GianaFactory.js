@@ -10,14 +10,14 @@ require.config({
 		"underscore" : "../deps/two",
 		"TWEEN" : "../deps/Tween",
 		"rbush" : "../deps/rbush",
-		"physics" : "../deps/physics"
+		"physics" : "../deps/Box2dWeb-2.1.a.3"
 	},
 	shim : {
 		"TWEEN" : {
 			exports : "TWEEN"
 		},
 		"physics" : {
-			exports : "Physics"
+			exports : "Box2D"
 		}
 	}
 });

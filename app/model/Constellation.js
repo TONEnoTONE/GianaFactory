@@ -1,5 +1,10 @@
 define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", "Tone/component/Envelope", "TERP", "model/Envelope"], 
 function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
+
+	var attackTime = "16n";
+	var sustainTime = "1m";
+	var releaseTime = "1m";
+
 	/**
 	 *  @constructor
 	 *  @param {Object} description 
@@ -14,7 +19,7 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 		this.player.toMaster();
 
 		/** @type {Tone.Envelope} */
-		this.envelope = new Envelope("16n", 0, 1, "1m");
+		this.envelope = new Envelope(attackTime, 0, 1, releaseTime);
 
 		this.envelope.connect(this.player.output.gain);
 
@@ -52,9 +57,9 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 		if (this.clipEnvelope !== null){
 			this.clipEnvelope.stop();
 		}
-		this.clipEnvelope = new ClipEnvelope(this.envelope.toSeconds("8n") * 1000, this.envelope.toSeconds("2m") * 1000, this.endTwinkle.bind(this));
+		this.clipEnvelope = new ClipEnvelope(this.envelope.toSeconds(attackTime) * 1000, this.envelope.toSeconds("2m") * 500, this.endTwinkle.bind(this));
 		this.envelope.triggerAttack();
-		this.envelope.triggerRelease("+2n");
+		this.envelope.triggerRelease("+"+releaseTime);
 	};
 
 	Constellation.prototype.loaded = function(){

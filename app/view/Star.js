@@ -5,7 +5,7 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 	 *  @constructor
 	 *  @param {Object} description
 	 */
-	var StarView = function(position, size, callback){
+	var StarView = function(position, size, callback, notConst){
 		this.position = position;
 		this.size = size;
 		this.element = Drawing.context.makeCircle(this.position.x, this.position.y, this.size / 2);
@@ -17,26 +17,32 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 		this.callback = callback;
 
 		//the physics
-		this.particle = Physics.makeParticle(8, this.position.x, this.position.y);
-		this.anchor = Physics.makeParticle(100, this.position.x, this.position.y);
-		this.anchor.makeFixed();
-		this.attraction = Physics.makeSpring(this.particle, this.anchor, 1, 0.5, 0);
-
-		Mouse.insertStar(this.position, this.size, this.touch.bind(this));
+		this.particle = Physics.makeParticle(this.size/2, this.position.x, this.position.y, this.touch.bind(this));
 
 		Mediator.route("update", this.update.bind(this));
 	};
 
 	StarView.prototype.update = function(){
-		if (!this.particle.resting()){
-			this.element.translation.set(this.particle.position.x, this.particle.position.y);
+		if (!this.particle.isResting()){
+			var position = this.particle.getPosition();
+			this.element.translation.set(position.x, position.y);
 		}
 	};
 
 	StarView.prototype.touch = function(vector){
-		var divisor = 20;
-		this.particle.velocity.set( -vector.x / divisor, -vector.y / divisor);
+		var vX = this.validateVelocity(-vector.x);
+		var vY = this.validateVelocity(-vector.y);
+		this.particle.applyForce(vX, vY);
 		this.callback();
+	};
+
+	StarView.prototype.validateVelocity = function(val){
+		var divisor = 20;
+		var maxVelocity = 2;
+		val = val * divisor;
+		// val = Math.min(val, maxVelocity);
+		// val = Math.max(val, -maxVelocity);
+		return val;
 	};
 
 	StarView.prototype.appear = function(duration, delay){
