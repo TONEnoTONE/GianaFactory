@@ -16,6 +16,8 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 
 		this.callback = callback;
 
+		this.lastHit = new Date();
+
 		//the physics
 		this.particle = Physics.makeParticle(this.size/2, this.position.x, this.position.y, this.touch.bind(this));
 
@@ -30,19 +32,21 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 	};
 
 	StarView.prototype.touch = function(vector){
-		var vX = this.validateVelocity(-vector.x);
-		var vY = this.validateVelocity(-vector.y);
-		this.particle.applyForce(vX, vY);
-		this.callback();
+		if (!this.wasJustHit()){
+			var mag = this.particle.applyForce(-vector.x, -vector.y);
+			this.callback(mag);
+		}
 	};
 
-	StarView.prototype.validateVelocity = function(val){
-		var divisor = 20;
-		var maxVelocity = 2;
-		val = val * divisor;
-		// val = Math.min(val, maxVelocity);
-		// val = Math.max(val, -maxVelocity);
-		return val;
+	StarView.prototype.wasJustHit = function(){
+		var now = new Date();
+		if (now - this.lastHit < 100){
+			this.lastHit = now;
+			return true;
+		} else {
+			this.lastHit = now;
+			return false;
+		}
 	};
 
 	StarView.prototype.appear = function(duration, delay){

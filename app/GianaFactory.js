@@ -1,7 +1,7 @@
 require.config({
 	baseUrl : "./app", 
 	paths : {
-		"Tone" : "../deps/Tone",
+		"Tone" : "../../Tone.js/Tone",
 		"jquery" : "../deps/jquery-2.1.1",
 		"domReady" : "../deps/domReady",
 		"TERP" : "../deps/TERP",
@@ -10,7 +10,8 @@ require.config({
 		"underscore" : "../deps/two",
 		"TWEEN" : "../deps/Tween",
 		"rbush" : "../deps/rbush",
-		"physics" : "../deps/Box2dWeb-2.1.a.3"
+		"physics" : "../deps/Box2dWeb-2.1.a.3",
+		"dat" : "../deps/dat.gui"
 	},
 	shim : {
 		"TWEEN" : {
@@ -18,17 +19,18 @@ require.config({
 		},
 		"physics" : {
 			exports : "Box2D"
-		}
+		},
+		"dat" :{
+			exports : "dat"
+		},
 	}
 });
 
-require(["controller/Mediator", "Tone/core/Transport", "manager/Analytics", "data/Version", "jquery", "controller/StarMap", "!domReady", "controller/Mouse"], 
-function(Mediator, Transport, Analytics, Version, $){
+require(["controller/Mediator", "Tone/core/Transport", "jquery", "controller/StarMap", "!domReady", "controller/Mouse"], 
+function(Mediator, Transport, $){
 
-	console.log("Giana Factory Interactive Album Cover [ version: " + Version.version + " ]");
+	console.log("Giana Factory Interactive Album Cover [ version: 2 ]");
 
-	var versionInfo = $("#VersionInfo");
-	versionInfo.text(Version.version);
 
 	Mediator.route("playClicked", function(){
 		Transport.start("+0.5");
@@ -38,5 +40,4 @@ function(Mediator, Transport, Analytics, Version, $){
 		Mediator.send("init");
 	}, 1000);
 
-	Analytics.trackEvent("App", "Session Started");
 });

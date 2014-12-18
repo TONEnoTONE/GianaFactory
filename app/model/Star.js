@@ -22,7 +22,8 @@ define(["controller/Mediator", "view/Star", "TERP", "Tone/source/Player", "Tone/
 		this.view.appear(1000, Math.floor(Math.random() * 1000 * 2));	
 	};
 
-	Star.prototype.touched = function(){
+	Star.prototype.touched = function(velocity){
+		this.player.setVolume(this.player.gainToDb(velocity), 0.05);
 		this.player.start();
 	};
 

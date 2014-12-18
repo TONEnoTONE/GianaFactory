@@ -53,12 +53,12 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 
 	};
 
-	Constellation.prototype.touched = function(){
+	Constellation.prototype.touched = function(vel){
 		if (this.clipEnvelope !== null){
 			this.clipEnvelope.stop();
 		}
 		this.clipEnvelope = new ClipEnvelope(this.envelope.toSeconds(attackTime) * 1000, this.envelope.toSeconds("2m") * 500, this.endTwinkle.bind(this));
-		this.envelope.triggerAttack();
+		this.envelope.triggerAttack(undefined, vel);
 		this.envelope.triggerRelease("+"+releaseTime);
 	};
 
