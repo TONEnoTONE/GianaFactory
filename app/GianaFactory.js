@@ -26,7 +26,8 @@ require.config({
 	}
 });
 
-require(["controller/Mediator", "Tone/core/Transport", "jquery", "controller/StarMap", "!domReady", "controller/Mouse"], 
+require(["controller/Mediator", "Tone/core/Transport", "jquery", "controller/StarMap", 
+	"!domReady", "controller/Mouse", "controller/Master"], 
 function(Mediator, Transport, $){
 
 	console.log("Giana Factory Interactive Album Cover [ version: 2 ]");
@@ -39,5 +40,19 @@ function(Mediator, Transport, $){
 	setTimeout(function(){
 		Mediator.send("init");
 	}, 1000);
+
+	var infoOpen = false;
+	$("#Info").on("mouseup touchend", function(e){
+		e.preventDefault();
+		if (!infoOpen){
+			$("#InfoText").addClass("Visible");
+			$("#Info").addClass("Active");
+			infoOpen = true;
+		} else {
+			infoOpen = false;
+			$("#InfoText").removeClass("Visible");
+			$("#Info").removeClass("Active");
+		}
+	});
 
 });

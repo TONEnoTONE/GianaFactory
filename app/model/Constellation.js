@@ -1,9 +1,10 @@
-define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", "Tone/component/Envelope", "TERP", "model/Envelope"], 
-function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
+define(["controller/Mediator", "view/Star", "view/Edge", "Tone/source/Player", 
+	"Tone/component/AmplitudeEnvelope", "TERP", "model/Envelope"], 
+function(Mediator, Star, Edge, Player, AmplitudeEnvelope, TERP, ClipEnvelope){
 
 	var attackTime = "16n";
 	var sustainTime = "1m";
-	var releaseTime = "1m";
+	var releaseTime = "3m";
 
 	/**
 	 *  @constructor
@@ -16,20 +17,21 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 		//sync the player to the transport
 		this.player.sync();
 		this.player.loop = true;
-		this.player.toMaster();
 
 		/** @type {Tone.Envelope} */
-		this.envelope = new Envelope(attackTime, 0, 1, releaseTime);
-
-		this.envelope.connect(this.player.output.gain);
+		this.envelope = new AmplitudeEnvelope(attackTime, 0, 1, releaseTime).toMaster();
+		this.player.connect(this.envelope);
 
 		/** @type {Array.<StarView>} */
 		this.stars = [];
 
 		this.clipEnvelope = null;
 
+		this.duration = this.player.toSeconds(attackTime + " + " + sustainTime + " + " + releaseTime) * 1000;
+
 		//make all the stars
-		for (var i = 0; i < description.stars.length; i++){
+		var i;
+		for (i = 0; i < description.stars.length; i++){
 			var starDesc = description.stars[i];
 			var pos = {
 				x : starDesc.x,
@@ -41,10 +43,10 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 
 		/** @type {Array.<Edge>} */
 		this.edges = [];
-		for (var i = 0; i < description.edges.length; i++){
+		for (i = 0; i < description.edges.length; i++){
 			var edge = description.edges[i];
-			var from = this.stars[edge[0]].particle;
-			var to = this.stars[edge[1]].particle;
+			var from = this.stars[edge[0]].position;
+			var to = this.stars[edge[1]].position;
 			var e = new Edge(from, to, this.touched.bind(this));
 			this.edges.push(e);
 		}
@@ -54,12 +56,14 @@ function(Mediator, Star, Edge, Player, Envelope, TERP, ClipEnvelope){
 	};
 
 	Constellation.prototype.touched = function(vel){
-		if (this.clipEnvelope !== null){
-			this.clipEnvelope.stop();
+		this.envelope.triggerAttackRelease(sustainTime, undefined, vel);
+		var i;
+		for (i = 0; i < this.stars.length; i++){
+			this.stars[i].twinkle(this.duration, Math.random() * 400, vel);
 		}
-		this.clipEnvelope = new ClipEnvelope(this.envelope.toSeconds(attackTime) * 1000, this.envelope.toSeconds("2m") * 500, this.endTwinkle.bind(this));
-		this.envelope.triggerAttack(undefined, vel);
-		this.envelope.triggerRelease("+"+releaseTime);
+		for (i = 0; i < this.edges.length; i++){
+			this.edges[i].twinkle(this.duration, Math.random() * 400, vel);
+		}
 	};
 
 	Constellation.prototype.loaded = function(){

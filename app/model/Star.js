@@ -1,4 +1,4 @@
-define(["controller/Mediator", "view/Star", "TERP", "Tone/source/Player", "Tone/core/Master"], 
+define(["controller/Mediator", "view/Star", "TERP", "Tone/source/Player", "Tone/core/Master", "Tone/core/Bus"], 
 	function(Mediator, StarView, TERP, Player, Master){
 	var Star = function(data){
 		//make a random position and size
@@ -13,18 +13,23 @@ define(["controller/Mediator", "view/Star", "TERP", "Tone/source/Player", "Tone/
 
 		this.player = new Player("./audio/stars/"+fileName.toString()+".mp3", this.loaded.bind(this));
 		this.player.retrigger = true;
-		this.player.toMaster();
+		this.player.volume.units = "gain";
+		this.player.send("star");
+		this.duration = 0;
 		this.view = new StarView(this.position, this.size, this.touched.bind(this), true);
 	};
 
 	Star.prototype.loaded = function(){
-		Mediator.send("sampleLoaded");
 		this.view.appear(1000, Math.floor(Math.random() * 1000 * 2));	
 	};
 
 	Star.prototype.touched = function(velocity){
-		this.player.setVolume(this.player.gainToDb(velocity), 0.05);
+		this.player.volume.rampTo(velocity, 0.05);
 		this.player.start();
+		if (this.duration === 0){
+			this.duration = this.player.buffer.duration * 1000;
+		}
+		this.view.twinkle(this.duration + 200, 0, velocity);
 	};
 
 	return Star;

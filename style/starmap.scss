@@ -4,6 +4,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
+	cursor: crosshair;
 }
 
 #StarMap #EdgeCanvas{
@@ -55,4 +56,77 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+#ConstellationNames {
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	opacity: 0;
+	transition: opacity 0.8s;
+
+	* {
+		position: absolute;
+		@include fontStyle;
+		font-weight: 900;
+		font-size: 10px;
+		color: white;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.Number {
+		font-size: 7px;
+		top: -9px;
+	}
+
+	#OurHearts {
+		top: 83%;
+		left: 38%;
+		width: 85px;
+	}
+
+	#Downtown{
+		top: 53%;
+		left: 47%;
+	}
+	#DontFall{
+		top: 42%;
+		left: 27%;
+	}
+	#HeadUp{
+		top: 54%;
+		left: 9%;
+	}
+	#InBetween{
+		top: 82%;
+		left: 70%;
+	}
+	#ItsYourLife{
+		top: 56%;
+		left: 83%;
+	}
+	#ILiveAtNight{
+		top: 27%;
+		left: 77%;
+	}
+	#WalkingMirror{
+		top: 11%;
+		left: 56%;
+	}
+	#RightOrWrong{
+		top: 13%;
+		left: 32%;
+	}
+	#MyPower{
+		top: 67%;
+		left: 32%;
+	}
+	#LemonMoon{
+		top: 33%;
+		left: 51%;
+	}
 }

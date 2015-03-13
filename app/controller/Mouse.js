@@ -1,8 +1,8 @@
-define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor", "controller/Physics"], 
-	function($, rbush, Size, Mediator, Cursor, Physics){
+define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor", "TERP"], 
+	function($, rbush, Size, Mediator, Cursor, TERP){
 
 	var tree = rbush(5);
-	var allLoaded = false;
+	var canPlay = false;
 
 	var touchPoints = {};
 
@@ -31,8 +31,8 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor", "c
 			};
 		}
 		// touchPoints[id].setPoint(x, y);
-		if (!allLoaded){
-			// return;
+		if (!canPlay){
+			return;
 		}
 		var pos = Size.getSize();
 		var leftBounding = pos.left;
@@ -55,7 +55,16 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor", "c
 				x : xDiff,
 				y : yDiff
 			};
-			Physics.testPosition(scaledX, scaledY, vector);
+			var searchSize = 1;
+			var res = tree.search([scaledX - searchSize, scaledY - searchSize, 
+				scaledX + searchSize, scaledY + searchSize]);
+			if (res.length > 0){
+				var mag = xDiff * xDiff + yDiff * yDiff;
+				mag = TERP.map(mag, 0, 300, 0, 1, 0.5);
+				for (var i = 0; i < res.length; i++){
+					res[i][4](mag);
+				}
+			}
 		}
 		//update the old coord
 		touchPoints[id].position = {
@@ -65,7 +74,7 @@ define(["jquery", "rbush", "view/Size", "controller/Mediator", "view/Cursor", "c
 	}
 
 	Mediator.route("playClicked", function(){
-		allLoaded = true;
+		canPlay = true;
 	});
 	$(document).on("touchmove touchstart", triggerTouch);
 	$(document).on("mousemove", function(e){
