@@ -19,7 +19,7 @@ function(Mediator, Star, Edge, Player, AmplitudeEnvelope, TERP, ClipEnvelope){
 		this.player.loop = true;
 
 		/** @type {Tone.Envelope} */
-		this.envelope = new AmplitudeEnvelope(attackTime, 0, 1, releaseTime).toMaster();
+		this.envelope = new AmplitudeEnvelope(attackTime, 0.01, 1, releaseTime).toMaster();
 		this.player.connect(this.envelope);
 
 		/** @type {Array.<StarView>} */
