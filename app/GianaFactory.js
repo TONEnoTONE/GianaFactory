@@ -30,7 +30,7 @@ require(["controller/Mediator", "Tone/core/Transport", "jquery", "controller/Sta
 	"!domReady", "controller/Mouse", "controller/Master"], 
 function(Mediator, Transport, $){
 
-	console.log("Giana Factory Interactive Album Cover [ version: 2 ]");
+	console.log("Lemon Moon Interactive v3");
 
 
 	Mediator.route("playClicked", function(){
