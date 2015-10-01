@@ -7,6 +7,7 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 
 	var size = Size.getSize();
 	var container = $("#StarMap");
+	var constellationNames = $("#ConstellationNames");
 	var type = Two.Types.svg;
 	var params = { width: size.width, height: size.height , type : type};
 	var two = new Two(params).appendTo(container[0]);
@@ -19,7 +20,7 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 	});
 
 	var playButton = $("#PlayButton");
-	var versionInfo = $("#VersionInfo");
+	var playText = playButton.find("#Text");
 	var playButtonText = [];
 	
 	//make sure it's square
@@ -32,6 +33,14 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 		two.height = size.height;
 		starGroup.translation.set(size.left, size.top);
 		starGroup.scale = size.size / 100;
+
+		//make the constellations square
+		constellationNames.css({
+			top: size.top,
+			left : size.left,
+			width : size.size,
+			height : size.size,
+		});
 	}
 
 	//initialization
@@ -39,15 +48,26 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 	Mediator.route("resize", makeSquare);
 
 	Mediator.route("allLoaded", function(){
-		playButton.text("PLAY");
-		versionInfo.addClass("Disappear");
+		playText.text("PLAY");
+		constellationNames.css({
+			"opacity" : 1
+		});
 		playButton.addClass("Button");
 		playButton.on("click touchend", function(){
+			constellationNames.css({
+				opacity : 0
+			});
 			Mediator.send("playClicked");
 			playButton.addClass("Disappear");
-			versionInfo.addClass("Disappear");
 		});
 	});
+
+
+	/*var groupRotation = 0;
+	Mediator.route("update", function(){
+		groupRotation+=0.001;
+		starGroup.rotation = groupRotation;
+	});*/
 
 	return {
 		context : two,

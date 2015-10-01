@@ -41,13 +41,13 @@ define(["TWEEN"], function(TWEEN){
 	
 	function updateLoop(){
 		requestAnimationFrame(updateLoop);
-		Mediator.send("update");
+		Mediator.send("update", Date.now());
 		TWEEN.update();
 	}
 
 	function twinkleUpdate(){
-		setTimeout(twinkleUpdate, 50);
-		Mediator.send("twinkleUpdate");
+		setTimeout(twinkleUpdate, 80);
+		Mediator.send("twinkleUpdate", Date.now());
 	}
 
 	updateLoop();

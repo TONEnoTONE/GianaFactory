@@ -1,22 +1,18 @@
-define(["controller/Mediator", "view/Drawing", "controller/Physics"], function(Mediator, Drawing, Physics){
+define(["controller/Mediator", "view/Drawing", "TERP"], function(Mediator, Drawing, TERP){
 	
 
-	var EdgeView = function(particle0, particle1, callback){
-		this.particle0 = particle0;
-		this.particle1 = particle1;
-
-		var pos0 = particle0.getPosition();
-		var pos1 = particle1.getPosition();
-
+	var EdgeView = function(pos0, pos1, callback){
 		this.element = Drawing.context.makeLine(pos0.x, pos0.y, pos1.x, pos1.y);
 		this.element.addTo(Drawing.stars);
 		this.element.linewidth = 0.18;
 		this.element.stroke = "#fff";
 		this.element.opacity = 0;
 
-		this.spring = Physics.makeSpring(particle0, particle1);
+		this.lastHit = Date.now();
+		this.maxOpacity = 0;
+		this.active = false;
 
-		Mediator.route("update", this.update.bind(this));
+		Mediator.route("twinkleUpdate", this.update.bind(this));
 	};
 
 
@@ -31,17 +27,30 @@ define(["controller/Mediator", "view/Drawing", "controller/Physics"], function(M
 			.start();
 	};
 
-	EdgeView.prototype.update = function(){
-		var translation;
-		if (!this.particle0.isResting()){
-			translation = this.element.translation;
-			var pos0 = this.particle0.getPosition();
-			this.element.vertices[0].set(pos0.x - translation.x, pos0.y - translation.y);
+	EdgeView.prototype.twinkle = function(duration, delay, velocity){
+		// this.active = true;
+		if (this.tween){
+			this.tween.stop();
 		}
-		if (!this.particle1.isResting()){
-			translation = this.element.translation;
-			var pos1 = this.particle1.getPosition();
-			this.element.vertices[1].set(pos1.x - translation.x, pos1.y - translation.y);
+		var self = this;
+		this.active = true;
+		this.tween = new TWEEN.Tween({opacity : 1 - velocity})
+			.to({opacity : 1}, duration)
+			.onUpdate(function(){
+				self.maxOpacity = this.opacity;
+			})
+			.onComplete(function(){
+				self.active = false;
+				self.element.opacity = 1;
+			})
+			.easing(TWEEN.Easing.Quadratic.Out)
+			.delay(delay)
+			.start();
+	};
+
+	EdgeView.prototype.update = function(now){
+		if (this.active){
+		 	this.element.opacity = TERP.scale(Math.random(), 1, this.maxOpacity);
 		}
 	};
 

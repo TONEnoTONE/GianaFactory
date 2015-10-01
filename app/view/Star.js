@@ -1,5 +1,5 @@
-define(["controller/Mediator", "jquery", "view/Drawing", "model/Oscillator", "TWEEN", "controller/Mouse", "controller/Physics"], 
-function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
+define(["controller/Mediator", "jquery", "view/Drawing", "model/Oscillator", "TWEEN", "controller/Mouse", "TERP"], 
+function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, TERP){
 
 	/**
 	 *  @constructor
@@ -16,33 +16,41 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 
 		this.callback = callback;
 
-		//the physics
-		this.particle = Physics.makeParticle(this.size/2, this.position.x, this.position.y, this.touch.bind(this));
+		this.lastHit = Date.now();
 
-		Mediator.route("update", this.update.bind(this));
+		this.maxOpacity = 0;
+
+		this.active = false;
+
+		Mouse.insertStar(this.position, this.size, this.touch.bind(this));
+
+		//the physics
+		// this.particle = Physics.makeParticle(this.size/2, this.position.x, this.position.y, this.touch.bind(this));
+
+		Mediator.route("twinkleUpdate", this.update.bind(this));
 	};
 
-	StarView.prototype.update = function(){
-		if (!this.particle.isResting()){
-			var position = this.particle.getPosition();
-			this.element.translation.set(position.x, position.y);
+	StarView.prototype.update = function(now){
+		if (this.active){
+		 	this.element.opacity = TERP.scale(Math.random(), 1, this.maxOpacity);
 		}
 	};
 
-	StarView.prototype.touch = function(vector){
-		var vX = this.validateVelocity(-vector.x);
-		var vY = this.validateVelocity(-vector.y);
-		this.particle.applyForce(vX, vY);
-		this.callback();
+	StarView.prototype.touch = function(mag){
+		if (!this.wasJustHit()){
+			this.callback(mag);
+		}
 	};
 
-	StarView.prototype.validateVelocity = function(val){
-		var divisor = 20;
-		var maxVelocity = 2;
-		val = val * divisor;
-		// val = Math.min(val, maxVelocity);
-		// val = Math.max(val, -maxVelocity);
-		return val;
+	StarView.prototype.wasJustHit = function(){
+		var now = Date.now();
+		if (now - this.lastHit < 100){
+			this.lastHit = now;
+			return true;
+		} else {
+			this.lastHit = now;
+			return false;
+		}
 	};
 
 	StarView.prototype.appear = function(duration, delay){
@@ -51,6 +59,28 @@ function(Mediator, $, Drawing, Oscillator, TWEEN, Mouse, Physics){
 			.to({scale : 1}, duration)
 			.onUpdate(function(){
 				elem.scale = this.scale;
+			})
+			.easing(TWEEN.Easing.Back.Out)
+			.delay(delay)
+			.start();
+	};
+
+	StarView.prototype.twinkle = function(duration, delay, velocity){
+		// this.active = true;
+		if (this.tween){
+			this.tween.stop();
+		}
+		var self = this;
+		this.active = true;
+		this.tween = new TWEEN.Tween({scale : 1  + velocity, opacity : 1 - velocity})
+			.to({scale : 1, opacity : 1}, duration)
+			.onUpdate(function(){
+				self.maxOpacity = Math.pow(this.opacity, 2);
+				self.element.scale = this.scale;
+			})
+			.onComplete(function(){
+				self.active = false;
+				self.element.opacity = 1;
 			})
 			.easing(TWEEN.Easing.Back.Out)
 			.delay(delay)
