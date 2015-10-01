@@ -27,6 +27,8 @@ function(Mediator, Star, Edge, Player, AmplitudeEnvelope, TERP, ClipEnvelope){
 
 		this.clipEnvelope = null;
 
+		this.lastTouch = 0;
+
 		this.duration = this.player.toSeconds(attackTime + " + " + sustainTime + " + " + releaseTime) * 1000;
 
 		//make all the stars
@@ -56,6 +58,12 @@ function(Mediator, Star, Edge, Player, AmplitudeEnvelope, TERP, ClipEnvelope){
 	};
 
 	Constellation.prototype.touched = function(vel){
+		/*var now = Date.now();
+		if (now - this.lastTouch < 1000){
+			return;
+		}
+		this.lastTouch = now;*/
+		vel = TERP.map(vel, 0.5, 1);
 		this.envelope.triggerAttackRelease(sustainTime, undefined, vel);
 		var i;
 		for (i = 0; i < this.stars.length; i++){

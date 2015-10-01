@@ -21,7 +21,7 @@ body {
   transition: opacity 1s 0.5s; }
 
 /*
-	the stars
+  the stars
  */
 .Star {
   position: absolute;
@@ -31,7 +31,8 @@ body {
   height: 0%;
   font-size: 0px;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   z-index: 1;
   opacity: 0; }
 
@@ -126,7 +127,8 @@ body {
   top: 50%;
   left: 50%;
   opacity: 0.5;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   transition: opacity 1s 0.5s; }
 
 #PlayButton {
@@ -212,8 +214,9 @@ body {
   top: 50%;
   left: 50%;
   opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: opacity 1s 0.5s;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  transition: opacity 0.9s;
   width: 90%;
   height: auto;
   background-color: rgba(0, 0, 0, 0.8);
@@ -235,5 +238,3 @@ body {
 
 #InfoText.Visible {
   opacity: 1; }
-
-/*# sourceMappingURL=main.css.map */

@@ -55,4 +55,20 @@ function(Mediator, Transport, $){
 		}
 	});
 
+/*	$("#Info").not().on("click", function(e){
+		if (infoOpen){
+			infoOpen = false;
+			$("#InfoText").removeClass("Visible");
+			$("#Info").removeClass("Active");		
+		}
+	});*/
+
+	$("body").on("click", function(e){
+		if (infoOpen && e.target.id !== "Info" && e.target.id !== "InfoText"){
+			infoOpen = false;
+			$("#InfoText").removeClass("Visible");
+			$("#Info").removeClass("Active");		
+		}
+	});
+
 });

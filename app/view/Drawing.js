@@ -62,6 +62,13 @@ define(["controller/Mediator", "jquery", "view/Size"], function(Mediator, $, Siz
 		});
 	});
 
+
+	/*var groupRotation = 0;
+	Mediator.route("update", function(){
+		groupRotation+=0.001;
+		starGroup.rotation = groupRotation;
+	});*/
+
 	return {
 		context : two,
 		stars : starGroup
